@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>おすすめ映画の結果</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        ul,
+        ol {
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            text-decoration: none;
+            color: #333;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>おすすめ映画の結果</h1>
+    {% if selected_movies %}
+    <h2>あなたが選んだ映画:</h2>
+    <ul>
+        {% for movie in selected_movies %}
+        <li>{{ movie }}</li>
+        {% endfor %}
+    </ul>
+    <hr>
+    {% endif %}
+    <h2>おすすめの5作品:</h2>
+    {% if recommendations %}
+    <ol>
+        {% for movie in recommendations %}
+        <li><strong>{{ movie }}</strong></li>
+        {% endfor %}
+    </ol>
+    {% else %}
+    <p>おすすめ映画が見つかりませんでした。</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('index') }}">最初に戻る</a></p>
+</body>
+
+</html>

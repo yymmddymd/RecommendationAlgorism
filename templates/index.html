@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>おすすめ映画</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        select {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>好きな映画を3つ選んでください</h1>
+    <form action="{{ url_for('recommend') }}" method="POST" onsubmit="return validateSelection()">
+        <label for="movie1">映画 1:</label>
+        <select name="selected_movies" id="movie1" required>
+            <option value="" disabled selected>選択してください</option>
+            {% for title in movie_titles %}
+            <option value="{{ title }}">{{ title }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="movie2">映画 2:</label>
+        <select name="selected_movies" id="movie2" required>
+            <option value="" disabled selected>選択してください</option>
+            {% for title in movie_titles %}
+            <option value="{{ title }}">{{ title }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="movie3">映画 3:</label>
+        <select name="selected_movies" id="movie3" required>
+            <option value="" disabled selected>選択してください</option>
+            {% for title in movie_titles %}
+            <option value="{{ title }}">{{ title }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">おすすめ映画を表示</button>
+    </form>
+    <hr>
+    <h2>使い方:</h2>
+    <p>・3つのプルダウンからそれぞれ異なる好きな映画を選択してください。</p>
+    <script>
+        function validateSelection() {
+            const m1 = document.getElementById('movie1').value;
+            const m2 = document.getElementById('movie2').value;
+            const m3 = document.getElementById('movie3').value;
+
+            if (!m1 || !m2 || !m3) {
+                alert('3つの映画すべてを選択してください。');
+                return false;
+            }
+            if (m1 === m2 || m1 === m3 || m2 === m3) {
+                alert('異なる映画を選択してください。');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+
+</html>
