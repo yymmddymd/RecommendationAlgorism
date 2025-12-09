@@ -30,7 +30,7 @@
     <h1>好きな映画を3つ選んでください</h1>
     <form action="{{ url_for('recommend') }}" method="POST" onsubmit="return validateSelection()">
         <label for="movie1">映画 1:</label>
-        <select name="selected_movies" id="movie1" required>
+        <select name="selected_movies" id="movie1">
             <option value="" disabled selected>選択してください</option>
             {% for title in movie_titles %}
             <option value="{{ title }}">{{ title }}</option>
@@ -38,7 +38,7 @@
         </select>
 
         <label for="movie2">映画 2:</label>
-        <select name="selected_movies" id="movie2" required>
+        <select name="selected_movies" id="movie2">
             <option value="" disabled selected>選択してください</option>
             {% for title in movie_titles %}
             <option value="{{ title }}">{{ title }}</option>
@@ -46,7 +46,7 @@
         </select>
 
         <label for="movie3">映画 3:</label>
-        <select name="selected_movies" id="movie3" required>
+        <select name="selected_movies" id="movie3">
             <option value="" disabled selected>選択してください</option>
             {% for title in movie_titles %}
             <option value="{{ title }}">{{ title }}</option>
@@ -57,18 +57,22 @@
     </form>
     <hr>
     <h2>使い方:</h2>
-    <p>・3つのプルダウンからそれぞれ異なる好きな映画を選択してください。</p>
+    <p>・好きな映画がある場合は選択してください。未選択の場合は評価の高い映画が表示されます。</p>
     <script>
         function validateSelection() {
             const m1 = document.getElementById('movie1').value;
             const m2 = document.getElementById('movie2').value;
             const m3 = document.getElementById('movie3').value;
 
-            if (!m1 || !m2 || !m3) {
-                alert('3つの映画すべてを選択してください。');
-                return false;
+            // すべて空ならOK (サーバー側でトップ5を表示)
+            if (!m1 && !m2 && !m3) {
+                return true;
             }
-            if (m1 === m2 || m1 === m3 || m2 === m3) {
+
+            // 選択されているものの中で重複チェック
+            const selections = [m1, m2, m3].filter(m => m !== "");
+            const uniqueSelections = new Set(selections);
+            if (selections.length !== uniqueSelections.size) {
                 alert('異なる映画を選択してください。');
                 return false;
             }

@@ -31,7 +31,11 @@ title_to_id = movies_df.set_index('title')['movieId'].to_dict()
 def get_recommendations(selected_titles):
     """選択された映画に基づいておすすめ映画を返す"""
     if not selected_titles:
-        return []
+        # 選択されていない場合は、平均評価が高い映画トップ5を表示
+        mean_ratings = ratings_df.groupby('movieId')['rating'].mean()
+        top_ids = mean_ratings.sort_values(ascending=False).head(5).index
+        recommended_titles = movies_df.set_index('movieId').loc[top_ids]['title'].tolist()
+        return recommended_titles
 
     total_scores = pd.Series(0.0, index=item_similarity_df.index)
 
