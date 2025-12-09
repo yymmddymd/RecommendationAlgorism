@@ -29,5 +29,28 @@
 * スコア計算後、選択された映画自体が推薦リストに入らないよう、それらの映画のスコアは`-1.0`に設定され除外される。
 
 # 3. Webサイトを動作させるために必要な起動手順、必要なインストール作業。
+
+## 3.1 必要なインストール作業
+
+以下のPythonライブラリをインストールする。
+
 ```bash
 pip install pandas scikit-learn Flask scipy
+```
+
+## 3.2 起動手順
+
+1. ファイルの配置: 以下のファイルがすべて揃っていることを確認する。
+* app.py
+* movies_100k.csv
+* ratings_100k.csv
+* templates/index.html (Flaskテンプレート)
+* templates/recommendations.html (Flaskテンプレート)
+
+2. アプリケーションの起動: ターミナルでapp.pyファイルのあるディレクトリに移動し、以下のコマンドを実行する。
+
+```bash
+python app.py
+```
+
+3. アクセス: コンソールに表示されたローカルホストのURL（例: http://127.0.0.1:5000/）をWebブラウザで開く。
